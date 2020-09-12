@@ -1,0 +1,8 @@
+Title:   MY FIRST OPEN SOURCE CONTRIBUTION 
+ by Shraddha Shaligram 
+
+ABOUT ME
+My name is Shraddha Shaligram. I’m a graduate computer science student and learning is my No. 1 passion. I look forward to being a lifelong student of technology. I have always worked on my personal projects focussed on the web development domain or rather some traditional internships. This was my first experience working on open source. I must admit that, as a beginner, it’s a really daunting process.
+Alright, that’s enough about me!
+It takes a lot of effort to get an internship as an international student in the United States, with millions of students coming from all over the world to study here. Due to the COVID-19 situation, all my internship interviews were on hold or canceled. I came across the MLH Fellowship applications on a Facebook group, Women of Rewriting the Code, and I just thought of giving it a try. I am so glad to say that now I am a part of the inaugural class of MLH Fellows, where I contribute to open source projects written in TypeScript.
+I probably must have sat through four to six hours of internship interview preparation daily, digging into Leetcode. But you never get a chance to talk about how what you do matters. I am finally getting to have some impact in the tech space, and having that impact can potentially ease peoples’ lives.
