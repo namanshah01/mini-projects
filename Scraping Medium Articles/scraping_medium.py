@@ -5,17 +5,21 @@ import re
 from bs4 import BeautifulSoup
 
 # switching to current running python files directory
-# os.chdir('\\'.join(__file__.split('/')[:-1]))
+os.chdir('\\'.join(__file__.split('/')[:-1]))
 
-def get_page(url):
+# function to get the html of the page
+def get_page():
+	url = input('Enter url of a medium article: ')
+	# handling possible error
 	if (url[:18] != 'https://medium.com') and (url[:17] != 'http://medium.com'):
 		print('Please enter a valid website, or make sure it is a medium article')
 		sys.exit(1)
 	res = requests.get(url)
 	res.raise_for_status()
 	soup = BeautifulSoup(res.text, 'html.parser')
-	return soup
+	return url, soup
 
+# function to remove all the html tags and replace some with specific strings
 def purify(text):
     rep = {"<br>": "\n", "<br/>": "\n", "<li>":  "\n"}
     rep = dict((re.escape(k), v) for k, v in rep.items()) 
@@ -24,13 +28,21 @@ def purify(text):
     text = re.sub('\<(.*?)\>', '', text)
     return text
 
-def collect_text(soup):
-	fin = ''
+# function to compile all of the scraped text in one string
+def collect_text(url, soup):
+	fin = f'url: {url}\n\n'
 	main = (soup.head.title.text).split('|')
-	fin += f'Title:   {main[0].upper()}\n{main[1]}'
+	fin += f'Title:   {main[0].strip().upper()}\n{main[1].strip()}'
 
 	header = soup.find_all('h1')
 	j = 1
+
+	try:
+		fin += '\n\nINTRODUCTION\n'
+		for elem in list(header[j].previous_siblings)[::-1]:
+			fin += f'\n{purify(str(elem))}'
+	except:
+		pass
 
 	fin += f'\n\n{header[j].text.upper()}'
 	for elem in header[j].next_siblings:
@@ -41,12 +53,14 @@ def collect_text(soup):
 		fin += f'\n{purify(str(elem))}'
 	return fin
 
+# function to save file in the current directory
 def save_file(fin):
 	with open('scraped_article.txt', 'w', encoding='utf8') as outfile:
 		outfile.write(fin)
+	print('File saved in current directory as scraped_article.txt')
 
-# https://medium.com/coding-blocks/one-stop-guide-to-google-summer-of-code-a9e803beeda7
-url = input('Enter url of a medium article: ')
-soup = get_page(url)
-fin = collect_text(soup)
-save_file(fin)
+# driver code
+if __name__ == '__main__':
+	url, soup = get_page()
+	fin = collect_text(url, soup)
+	save_file(fin)
