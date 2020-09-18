@@ -1,2 +1,2 @@
 # mini-projects
-A collection of some mini projects that I have made, and will be making in future.
+A collection of projects I make in my free time within a few hours
