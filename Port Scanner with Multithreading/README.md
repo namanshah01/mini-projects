@@ -8,4 +8,4 @@ All libraries used in the script are a part of 'python standard library', no add
 - Replace the `HOST-IP` in the ip_ad.cfg file with IP address of desired device
 - To provide IP address as a direct input, uncomment line 84 in port_scanner.py file (and comment line 83)
 - Run like any other python file (see the image for details).
-![script execution](script_execution.jpg)
+![script execution](script_execution.png)
