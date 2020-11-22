@@ -5,8 +5,9 @@ host = '127.0.0.1'
 port = 55555
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# server.close()
+# # server.close()
 # server.shutdown(socket.SHUT_RDWR)
+# server.close()
 server.bind((host, port))
 server.listen()
 
@@ -42,11 +43,16 @@ def receive():
 		clients.append(client)
 
 		print(f'Nickname is {nickname}')
-		broadcast(f'{nickname} joined!'.encode('ascii'))
-		client.send('\nConnected to server!'.encode('ascii'))
+		broadcast(f'\r{nickname} joined!'.encode('ascii'))
+		client.send('Connected to server!'.encode('ascii'))
+		# client.send('Send /disconnect to leave the chat.'.encode('ascii'))
 
 		thread = threading.Thread(target=handle, args=(client,))
 		thread.start()
 
 receive()
 
+# issue
+# when person A writes an incomplete message and person B sends the message
+# A's input is erased and B's message is shown
+# But the next time, A sends a message the previous part of A that was erased is still a part of the message
