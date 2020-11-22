@@ -1,5 +1,5 @@
-import threading
 import socket
+import threading
 
 host = '127.0.0.1'
 port = 55555
@@ -21,29 +21,32 @@ def handle(client):
 	while True:
 		try:
 			message = client.recv(1024)
-			broadcast.send(message)
+			broadcast(message)
 		except:
 			index = clients.index(client)
-			clients.pop(index)
+			clients.remove(client)
 			client.close()
-			broadcast(f'{nicknames.pop(index)} has left the chat.'.encode('ascii'))
+			nickname = nicknames[index]
+			broadcast(f'{nickname} left the chat.'.encode('ascii'))
+			nicknames.remove(nickname)
 			break
 
 def receive():
 	while True:
 		client, address = server.accept()
-		print(f'Connected with {str(address)}')
+		print(f'Connected with {address}')
 
 		client.send('NICK'.encode('ascii'))
 		nickname = client.recv(1024).decode('ascii')
 		nicknames.append(nickname)
 		clients.append(client)
 
-		print(f'Nickname of client is {nickname}')
-		broadcast(f'{nickname} joined the chat!'.encode('ascii'))
-		client.send('Connected to the server.'.encode('ascii'))
+		print(f'Nickname is {nickname}')
+		broadcast(f'{nickname} joined!'.encode('ascii'))
+		client.send('\nConnected to server!'.encode('ascii'))
 
 		thread = threading.Thread(target=handle, args=(client,))
 		thread.start()
 
 receive()
+

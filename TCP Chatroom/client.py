@@ -10,14 +10,18 @@ nickname = input('Choose a nickname: ')
 
 def receive():
 	while True:
+		# try:
+		# 	check = message[:message.index(':')]
+		# except:
+		# 	check = '_:'
 		try:
 			message = client.recv(1024).decode('ascii')
 			if message == 'NICK':
 				client.send(nickname.encode('ascii'))
-			# elif message[:message.index(':')] == nickname:
-				# continue
-			else:
+			elif message[:message.find(':')] != nickname:
 				print(message)
+			# else:
+				# print(message)
 		except:
 			print('An error occured. Disconnecting from the server.')
 			client.close()
@@ -26,7 +30,8 @@ def receive():
 def write():
 	while True:
 		# print('You: ', end='')
-		message = f'{nickname}: {input()}'
+		inp = input()
+		message = f'{nickname}: {inp}'
 		client.send(message.encode('ascii'))
 
 receive_thread = threading.Thread(target=receive)
