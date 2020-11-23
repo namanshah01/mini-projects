@@ -2,11 +2,14 @@ import requests
 import threading
 from queue import Queue
 
+domain = 'hackthissite.org'
+
 with open('subdomains-10k.txt', 'r') as f:
 	subdomains = f.read().split()[:1000]
 
 def check(subdomain):
-	url = f'http://{subdomain}.hackthissite.org'
+	global domain
+	url = f'http://{subdomain}.{domain}'
 	try:
 		res = requests.get(url, timeout=2)
 	except requests.ConnectionError:
