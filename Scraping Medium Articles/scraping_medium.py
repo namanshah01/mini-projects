@@ -4,8 +4,9 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-# switching to current running python files directory
-os.chdir('\\'.join(__file__.split('/')[:-1]))
+# uncomment any of below lines to switch to current running python files directory
+# os.chdir('\\'.join(__file__.split('/')[:-1]))	# for windows os
+# os.chdir(__file__.rsplit('/', 1)[0])		# for linux/mac os
 
 # function to get the html of the page
 def get_page():
